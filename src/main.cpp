@@ -21,6 +21,8 @@
 // Caméra
 Camera camera(CAMERA_START_POSITION);
 
+// Shader pour les objets, initialisé plus tard dans le main()
+Shader objectShader;
 
 // Temps pour une itération de la boucle de rendu
 float deltaTime = 0.0f;
@@ -166,12 +168,38 @@ void processInput(GLFWwindow *window)
             int choiceInt = std::stoi(choice);
 
 
-            // Création d’un GameObject
+            // Création d'un GameObject
             if (choiceInt == 1)
             {
                 std::cout << "Pour creer un nouveau GameObject :"
+                          << std::endl
+                          << "nomDuGameObject path/vers/mon/modele.obj 1 pour inverser verticalement les texture ou 0 pour ne pas les inverser :"
                           << std::endl;
+
+
+                std::string userInput;
+                std::getline(std::cin, userInput);
+                std::smatch matches;
+                std::regex gameObjectCreationPattern(R"(^(\S+)\s+(\S+)\s+(0|1)$)");
+                if (std::regex_search(userInput, matches, gameObjectCreationPattern))
+                {
+                    std::string gameObjectName = matches[1];
+                    std::string objectPath = matches[2];
+                    bool flipTextureVertically = matches[3] == "1";
+
+
+                    std::cout << "GameObject '" << gameObjectName << "' cree.\n"
+                              << "Path: " << objectPath << "\n"
+                              << "Inverser verticalement les textures: " << std::boolalpha << flipTextureVertically << std::endl;
+
+                    gameObjects.push_back(std::make_unique<GameObject>(gameObjectName, objectPath, flipTextureVertically, objectShader, gameObjects));
+                }
+                else
+                {
+                    std::cout << "Format d'entree invalide." << std::endl;
+                }
             }
+
             // Modification de GameObject
             else if (choiceInt == 2)
             {
@@ -265,7 +293,7 @@ int main()
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 
-    Shader objectShader(OBJECT_VERTEX_SHADER_PATH, OBJECT_FRAGMENT_SHADER_PATH);
+    objectShader = Shader(OBJECT_VERTEX_SHADER_PATH, OBJECT_FRAGMENT_SHADER_PATH);
     Shader lightSourceShader(LIGHT_VERTEX_SHADER_PATH, LIGHT_FRAGMENT_SHADER_PATH);
 
 
