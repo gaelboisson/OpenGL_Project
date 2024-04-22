@@ -154,6 +154,10 @@ void processInput(GLFWwindow *window)
         gameObjects[0]->move(glm::vec3(-0.1f, 0.0f, 0.0f));
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
         gameObjects[0]->move(glm::vec3(0.1f, 0.0f, 0.0f));
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+        gameObjects[0]->move(glm::vec3(0.0f, 0.0f, -0.1f));
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+        gameObjects[0]->move(glm::vec3(0.0f, 0.0f, 0.1f));
 
 
     // Menu "²"
