@@ -143,6 +143,11 @@ void processInput(GLFWwindow *window)
         camera.processKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.processKeyboard(RIGHT, deltaTime);
+    
+
+    // Gestion des déplacements des objets avec les touches du clavier
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+        gameObjects[0]->move(glm::vec3(0.0f, 0.1f, 0.0f));
 
 
     // Menu "²"

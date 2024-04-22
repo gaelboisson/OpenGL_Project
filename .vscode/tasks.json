@@ -15,6 +15,7 @@
                 "-lglfw3",
                 "-lopengl32",
                 "-lgdi32",
+                "-lirrklang",
                 "-o",
                 "${workspaceFolder}/build/OpenGL_Project.exe"
             ],

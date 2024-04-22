@@ -45,6 +45,9 @@ public:
     void Draw();
 
 
+    void move(const glm::vec3 &offset);
+
+
     string getName() { return name; }
 
 

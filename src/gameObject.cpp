@@ -53,3 +53,9 @@ void GameObject::Draw()
     glUniformMatrix4fv(glGetUniformLocation(shader.ID, "model"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
     graphicModel.Draw(shader);
 }
+
+
+void GameObject::move(const glm::vec3 &offset)
+{
+    modelMatrix = glm::translate(modelMatrix, offset);
+}
