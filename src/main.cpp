@@ -148,6 +148,12 @@ void processInput(GLFWwindow *window)
     // Gestion des déplacements des objets avec les touches du clavier
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
         gameObjects[0]->move(glm::vec3(0.0f, 0.1f, 0.0f));
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+        gameObjects[0]->move(glm::vec3(0.0f, -0.1f, 0.0f));
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+        gameObjects[0]->move(glm::vec3(-0.1f, 0.0f, 0.0f));
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+        gameObjects[0]->move(glm::vec3(0.1f, 0.0f, 0.0f));
 
 
     // Menu "²"
