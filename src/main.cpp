@@ -38,8 +38,11 @@ float lastY;
 // Variables pour la gestion du clavier
 bool graveAccentKeyPressed = false;
 
+// Référence à tous les GameObjects
 std::vector<std::unique_ptr<GameObject>> gameObjects;
 
+// Déclaration de la variable pour stocker l'index du GameObject sélectionné
+int selectedObjectIndex = 0;
 
 // Définition des motifs regex pour les instructions de transformation d'un gameObject
 std::regex translatePattern(R"(t\s+([-\d\.]+)\s+([-\d\.]+)\s+([-\d\.]+))");
@@ -145,19 +148,34 @@ void processInput(GLFWwindow *window)
         camera.processKeyboard(RIGHT, deltaTime);
     
 
-    // Gestion des déplacements des objets avec les touches du clavier
+    // Sélection du gameObject avec les touches du clavier
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+    {
+        selectedObjectIndex--;
+        if (selectedObjectIndex < 0)
+            selectedObjectIndex = gameObjects.size() - 1;
+    }
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+    {
+        selectedObjectIndex++;
+        if (selectedObjectIndex >= gameObjects.size())
+            selectedObjectIndex = 0;
+    }
+
+
+    // Gestion des déplacements du gameObject sélectionné avec les touches du clavier
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-        gameObjects[0]->move(glm::vec3(0.0f, 0.1f, 0.0f));
+        gameObjects[selectedObjectIndex]->move(glm::vec3(0.0f, 0.1f, 0.0f));
     if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-        gameObjects[0]->move(glm::vec3(0.0f, -0.1f, 0.0f));
+        gameObjects[selectedObjectIndex]->move(glm::vec3(0.0f, -0.1f, 0.0f));
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-        gameObjects[0]->move(glm::vec3(-0.1f, 0.0f, 0.0f));
+        gameObjects[selectedObjectIndex]->move(glm::vec3(-0.1f, 0.0f, 0.0f));
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-        gameObjects[0]->move(glm::vec3(0.1f, 0.0f, 0.0f));
+        gameObjects[selectedObjectIndex]->move(glm::vec3(0.1f, 0.0f, 0.0f));
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-        gameObjects[0]->move(glm::vec3(0.0f, 0.0f, -0.1f));
+        gameObjects[selectedObjectIndex]->move(glm::vec3(0.0f, 0.0f, -0.1f));
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-        gameObjects[0]->move(glm::vec3(0.0f, 0.0f, 0.1f));
+        gameObjects[selectedObjectIndex]->move(glm::vec3(0.0f, 0.0f, 0.1f));
 
 
     // Menu "²"
